@@ -1,4 +1,5 @@
 <%- include('../layouts/adminheader.ejs')  %> 
+
     <h2 class="page-title">Add a page</h2>
     <a href="/admin/pages" class="btn btn-primary">Back to all pages</a>
     <br><br>
@@ -14,8 +15,8 @@
         </div>
         <div class="form-group">
             <label for="">Content</label>
-            <textarea name="content" class="form-control" placeholder="Content" cols="30" rows="10"><%= content %> </textarea>
+            <textarea id="ta" name="content" class="form-control" placeholder="Content" cols="30" rows="10"><%= content %> </textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-<% include('../layouts/adminfooter.ejs')  %> 
+<%- include('../layouts/adminfooter.ejs')  %> 

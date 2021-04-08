@@ -16,9 +16,13 @@ var flash = require('connect-flash');
 
 var config = require("./config/database");
 
+var fileUpload = require('express-fileupload');
+
 var indexRouter = require('./routes/index');
 
 var adminRouter = require('./routes/admin_pages');
+
+var categoryRouter = require('./routes/admin_categories');
 
 var usersRouter = require('./routes/users');
 
@@ -59,9 +63,12 @@ app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
+app.use(fileUpload());
 app.use('/', indexRouter);
 app.use('/admin/pages', adminRouter);
-app.use('/users', usersRouter); // catch 404 and forward to error handler
+app.use('/admin/categories', categoryRouter);
+app.use('/users', usersRouter);
+app.use('/admin/products', require("./routes/admin_products")); // catch 404 and forward to error handler
 
 app.use(function (req, res, next) {
   next(createError(404));
