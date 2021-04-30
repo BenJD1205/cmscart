@@ -20,7 +20,7 @@ var ProductSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    category: {
+    image: {
         type: String,
     },
 });

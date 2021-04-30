@@ -1,14 +1,17 @@
 <%- include('../layouts/adminheader.ejs')  %> 
 
 <h2 class="product-title">Products</h2>
-<a href="/admin/pages/add-product" class="btn btn-primary">Add a new Product</a>
+<a href="/admin/products/add-product" class="btn btn-primary">Add a new Product</a>
 <br><br>
 
 <% if (count >0 ) { %>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Title</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Product image</th>
+                <th>Category</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -17,17 +20,17 @@
             <% products.forEach((product) => { %>
             <tr>
                 <td><%= product.title %> </td>
-                <td>$<%= parserFoat(product.price).toFixed(2) %> </td>
+                <td>$<%= parseFloat(product.price).toFixed(2) %> </td>
                 <td>
                     <% if (product.image=="") { %>
-                        <img src="/images/noimage.png" alt="">
+                        <img class="noimage" src="/images/noimage.png" alt="">
                     <% } else { %>
-                     <img src="/product_images/<%= product._id %>/<%= product.image %>  " alt="">
+                        <img class="product-img" src="/product_images/<%= product._id %>/<%= product.image %>  " alt="">
                     <% } %>
                 </td>
-                <td><%= product.title %> </td>
+                <td><%= product.category %> </td>
                 <td><a href="/admin/products/edit-product/<%= product._id %> ">Edit</a></td>
-                <td><a class="confirmDeletion" href="/admin/products/delete-product/<%= product._id %> "></a></td>
+                <td><a class="confirmDeletion" href="/admin/products/delete-product/<%= product._id %> ">Delete</a></td>
             </tr>
             <% }) %>
         </tbody>

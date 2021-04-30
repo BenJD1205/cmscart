@@ -51,6 +51,11 @@ router.post('/add-category', [check('title', 'Title must have a value.').notEmpt
         });
         category.save(function (err) {
           if (err) return console.log(err);
+          Category.find({}).exec(function (err, categories) {
+            if (err) return console.log(err);else {
+              req.app.locals.categories = categories;
+            }
+          });
           req.flash('success', 'Category added');
           res.redirect('/admin/categories');
         });
@@ -67,7 +72,7 @@ router.get('/edit-category/:id', function (req, res, next) {
     });
   });
 });
-router.post('/edit-category/:id', [check('title', 'Title must have a value.').notEmpty()], function (req, res, next) {
+router.post('/edit-category/:id', [check('title', 'Title must have a value.').isEmpty()], function (req, res, next) {
   var title = req.body.title;
   var slug = title.replace(/\s+/g, '-').toLowerCase();
   var id = req.params.id;
@@ -97,6 +102,11 @@ router.post('/edit-category/:id', [check('title', 'Title must have a value.').no
           category.slug = slug;
           category.save(function (err) {
             if (err) return console.log(err);
+            Category.find({}).exec(function (err, categories) {
+              if (err) return console.log(err);else {
+                req.app.locals.categories = categories;
+              }
+            });
             req.flash('success', 'Page updated');
             res.redirect('/admin/categories/edit-category/' + id);
           });
@@ -108,6 +118,11 @@ router.post('/edit-category/:id', [check('title', 'Title must have a value.').no
 router.get('/delete-category/:id', function (req, res, next) {
   Category.findByIdAndRemove(req.params.id, function (err) {
     if (err) return console.log(err);
+    Category.find({}).exec(function (err, categories) {
+      if (err) return console.log(err);else {
+        req.app.locals.categories = categories;
+      }
+    });
     req.flash('success', 'Page deleted');
     res.redirect('/admin/categories');
   });

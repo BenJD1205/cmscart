@@ -62,6 +62,11 @@ router.post('/add-page', [check('title', 'Title must have a value.').notEmpty(),
         });
         page.save(function (err) {
           if (err) return console.log(err);
+          Page.find({}).exec(function (err, pages) {
+            if (err) return console.log(err);else {
+              req.app.locals.pages = pages;
+            }
+          });
           req.flash('success', 'Page added');
           res.redirect('/admin/pages');
         });
@@ -80,7 +85,8 @@ router.get('/edit-page/:id', function (req, res, next) {
     });
   });
 });
-router.post('/edit-page/:id', [check('title', 'Title must have a value.').notEmpty(), check('content', 'Content must have a value.').notEmpty()], function (req, res, next) {
+var isValidator = [check('title', 'Title must have a value.').isEmpty(), check('content', 'Content must have a value.').isEmpty()];
+router.post('/edit-page/:id', isValidator, function (req, res, next) {
   var title = req.body.title;
   var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
   if (slug == "") slug = title.replace(/\s+/g, '-').toLowerCase();
@@ -115,6 +121,11 @@ router.post('/edit-page/:id', [check('title', 'Title must have a value.').notEmp
           page.content = content;
           page.save(function (err) {
             if (err) return console.log(err);
+            Page.find({}).exec(function (err, pages) {
+              if (err) return console.log(err);else {
+                req.app.locals.pages = pages;
+              }
+            });
             req.flash('success', 'Page updated');
             res.redirect('/admin/pages/edit-page/' + id);
           });
@@ -126,6 +137,11 @@ router.post('/edit-page/:id', [check('title', 'Title must have a value.').notEmp
 router.get('/delete-page/:id', function (req, res, next) {
   Page.findByIdAndRemove(req.params.id, function (err) {
     if (err) return console.log(err);
+    Page.find({}).exec(function (err, pages) {
+      if (err) return console.log(err);else {
+        req.app.locals.pages = pages;
+      }
+    });
     req.flash('success', 'Page deleted');
     res.redirect('/admin/pages');
   });

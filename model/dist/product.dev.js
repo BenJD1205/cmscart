@@ -1,10 +1,8 @@
 "use strict";
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var mongoose = require('mongoose');
 
-var ProductSchema = mongoose.Schema(_defineProperty({
+var ProductSchema = mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -23,8 +21,9 @@ var ProductSchema = mongoose.Schema(_defineProperty({
   price: {
     type: Number,
     required: true
+  },
+  image: {
+    type: String
   }
-}, "category", {
-  type: String
-}));
+});
 var Product = module.exports = mongoose.model('Product', ProductSchema);

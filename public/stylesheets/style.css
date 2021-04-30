@@ -5,3 +5,59 @@ body {
 a {
   color: #00B7FF;
 }
+
+.product-img{
+  width: 100px;
+}
+
+.noimage{
+  width: 100px;
+}
+
+.nav-item{
+  color: #fff;
+  text-decoration: none;
+  margin: 0px 10px;
+}
+
+img.pimage{
+  width: 150px;
+}
+
+a.pa{
+  display: inline-block;
+  height: 160px;
+}
+
+.row .product .p{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+img.spi{ 
+  width: 100%;
+}
+
+ul.gallery.li {
+  display: inline-block;
+  margin: 20px;
+  list-style: none;
+}
+
+ul.gallery{
+  padding: 0px;
+}
+
+ul.gallery li:first-child{
+  margin-left: 0px;
+}
+
+ul.gallery li {
+  margin: 20px;
+  display: inline-block;
+  list-style: none;
+}
+
+img.cpi{
+  width: 100px;
+}

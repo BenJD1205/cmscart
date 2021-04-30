@@ -34,6 +34,10 @@ router.post('/add-category',[
                 category.save(function(err) {
                     if (err) 
                         return console.log(err);
+                    Category.find({}).exec(function(err,categories) {
+                        if(err) return console.log(err);
+                        else{req.app.locals.categories = categories;}
+                    });
                     req.flash('success', 'Category added');
                     res.redirect('/admin/categories');
                 })
@@ -55,7 +59,7 @@ router.get('/edit-category/:id', function(req, res, next){
 })
 
 router.post('/edit-category/:id', [
-    check('title', 'Title must have a value.').notEmpty(),
+    check('title', 'Title must have a value.').isEmpty(),
 ],function(req, res, next){
     var title = req.body.title;
     var slug = title.replace(/\s+/g, '-').toLowerCase();
@@ -79,6 +83,10 @@ router.post('/edit-category/:id', [
                     category.save(function(err) {
                         if(err)
                             return console.log(err);
+                        Category.find({}).exec(function(err,categories) {
+                            if(err) return console.log(err);
+                            else{req.app.locals.categories = categories;}
+                        });
                         req.flash('success', 'Page updated');
                         res.redirect('/admin/categories/edit-category/' + id);
                     })   
@@ -92,6 +100,11 @@ router.post('/edit-category/:id', [
 router.get('/delete-category/:id', function(req, res, next){
     Category.findByIdAndRemove(req.params.id, function (err) {
         if(err) return console.log(err);
+
+        Category.find({}).exec(function(err,categories) {
+            if(err) return console.log(err);
+            else{req.app.locals.categories = categories;}
+        });
         req.flash('success', 'Page deleted');
         res.redirect('/admin/categories');
     });
